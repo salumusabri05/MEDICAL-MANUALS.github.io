@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORNAX Medical Equipment Manuals</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" id="fornax" href="#">FORNAX Medical Manuals</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="categories.html">Categories</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="about.html">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="contact.html">Contact</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <div class="jumbotron">
+    <h1 class="display-4">Welcome to Medical Equipment Manuals</h1>
+    <p class="lead">Find user manuals for common medical equipment used in Tanzania.</p>
+    <hr class="my-4">
+    <p>Search for manuals or browse by category.</p>
+    <form class="form-inline my-2 my-lg-0">
+      <!-- Search Type Selection -->
+      <div class="form-group mr-2">
+        <select class="form-control" id="searchType" aria-label="Search Type">
+          <option value="words">Search by Words</option>
+          <option value="serial">Search by Serial Number</option>
+          <option value="model">Search by Model Name</option>
+          <option value="scan">Scan QR Code/Barcode</option>
+        </select>
+      </div>
+
+      <!-- Search Input -->
+      <input class="form-control mr-2" type="search" placeholder="Enter search query" aria-label="Search Query">
+
+      <!-- File Input for QR Code/Barcode Scanning -->
+      <div class="form-group mr-2 d-none" id="fileInputGroup">
+        <input type="file" class="form-control-file" id="fileInput" accept="image/*">
+      </div>
+
+      <!-- Search Button -->
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <script>
+      document.getElementById('searchType').addEventListener('change', function() {
+        const fileInputGroup = document.getElementById('fileInputGroup');
+        if (this.value === 'scan') {
+          fileInputGroup.classList.remove('d-none');
+        } else {
+          fileInputGroup.classList.add('d-none');
+        }
+      });
+    </script>
+
+  </div>
+
+  <h2>Featured Manuals</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title"><a href="manual.html">Manual 1</a></h5>
+          <p class="card-text">Brief description of Manual 1...</p>
+          <a href="manual.html" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title"><a href="manual.html">Manual 1</a></h5>
+          <p class="card-text">Brief description of Manual 1...</p>
+          <a href="manual.html" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title"><a href="manual.html">Manual 1</a></h5>
+          <p class="card-text">Brief description of Manual 1...</p>
+          <a href="manual.html" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+    <!-- More featured manuals -->
+  </div>
+</div>
+<!-- upload a manual-->
+<section id="manual">
+<div class="container mt-5">
+  <h2>Upload Manual</h2>
+  <form id="uploadForm">
+    <div class="form-group">
+      <label for="manualTitle">Manual Title</label>
+      <input type="text" class="form-control" id="manualTitle" placeholder="Enter manual title" required>
+    </div>
+    <div class="form-group">
+      <label for="manualAuthor">Author</label>
+      <input type="text" class="form-control" id="manualAuthor" placeholder="Enter author" required>
+    </div>
+    <div class="form-group">
+      <label for="manualCover">Manual Cover</label>
+      <input type="file" class="form-control-file" id="manualCover" accept="image/*" required>
+    </div>
+    <div class="form-group">
+      <label for="manualFile">Manual File (PDF)</label>
+      <input type="file" class="form-control-file" id="manualFile" accept="application/pdf" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+  <a href="manual.html" class="btn btn-secondary mt-3">View Manuals</a>
+</div>
+</section>
+<script>
+  document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const manualTitle = document.getElementById('manualTitle').value;
+    const manualAuthor = document.getElementById('manualAuthor').value;
+    const manualCover = document.getElementById('manualCover').files[0];
+    const manualFile = document.getElementById('manualFile').files[0];
+
+    if (manualCover && manualFile) {
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const coverUrl = e.target.result;
+
+        const manuals = JSON.parse(localStorage.getItem('manuals')) || [];
+        const newManual = {
+          id: Date.now(),
+          title: manualTitle,
+          author: manualAuthor,
+          cover: coverUrl,
+          file: URL.createObjectURL(manualFile)
+        };
+
+        manuals.push(newManual);
+        localStorage.setItem('manuals', JSON.stringify(manuals));
+        alert('Manual uploaded successfully!');
+      };
+
+      reader.readAsDataURL(manualCover);
+    }
+  });
+</script>
+<section id="search-sec">
+  <div class="container" id="search-div">
+    <p id="search-box">
+      YOU DON'T FIND YOUR SEARCH IN OUR WEB ? ENTER THE DETAILS BELOW TO SEARCH IT THROUGH OUT THE INTERNET !
+    </p>
+    <style>
+      #search-box {
+        color: #007bff;
+        margin: 10px 10px ;
+        text-align: center;
+        font-size: 16px;
+      }
+
+    </style>
+  </div>
+<script async src="https://cse.google.com/cse.js?cx=96c9ed3fdb9f64f6a">
+</script>
+<div class="gcse-search"></div>
+</section>
+
+
+<!-- gemini API -->
+<script defer async>
+  document.addEventListener('DOMContentLoaded', function() {
+    // setting global variables
+    window.botId = 4340
+
+    // create div with id = sarufi-chatbox
+    const div = document.createElement("div")
+    div.id = "sarufi-chatbox"
+    document.body.appendChild(div)
+
+    // create and attach script tag
+    const script = document.createElement("script")
+    script.crossOrigin = true
+    script.type = "module"
+    script.src = "https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/example/vanilla-js/script.js"
+    document.head.appendChild(script)
+
+    // create and attach css
+    const style = document.createElement("link")
+    style.crossOrigin = true
+    style.rel = "stylesheet"
+    style.href = "https://cdn.jsdelivr.net/gh/flexcodelabs/sarufi-chatbox/example/vanilla-js/style.css"
+    document.head.appendChild(style)
+  });
+</script>
+
+<!-- gemini API-->
+
+
+
+
+<footer class="bg-light text-center py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 footer-section">
+        <h5>Follow Us</h5>
+        <div class="links">
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+          <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+        </div>
+      </div>
+      <div class="col-md-4 footer-section">
+        <h5>Manufacturers</h5>
+        <div class="links">
+          <a href="https://example.com/manufacturer1"><i class="fas fa-industry"></i> Manufacturer 1</a>
+          <a href="https://example.com/manufacturer2"><i class="fas fa-industry"></i> Manufacturer 2</a>
+          <a href="https://example.com/manufacturer3"><i class="fas fa-industry"></i> Manufacturer 3</a>
+          <a href="https://example.com/manufacturer4"><i class="fas fa-industry"></i> Manufacturer 4</a>
+          <a href="https://example.com/manufacturer5"><i class="fas fa-industry"></i> Manufacturer 5</a>
+        </div>
+      </div>
+      <div class="col-md-4 footer-section">
+        <h5>Hospitals</h5>
+        <div class="links">
+          <a href="https://example.com/hospital1"><i class="fas fa-hospital"></i> JKCI</a>
+          <a href="https://example.com/hospital2"><i class="fas fa-hospital"></i> MNH</a>
+          <a href="https://example.com/hospital3"><i class="fas fa-hospital"></i> MNH-MLOGANZILA</a>
+          <a href="https://example.com/hospital4"><i class="fas fa-hospital"></i> AMANA</a>
+          <a href="https://example.com/hospital5"><i class="fas fa-hospital"></i> AGAKHAN</a>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-12 footer-section">
+        <h5>Associations</h5>
+        <div class="links">
+          <a href="https://example.com/association1"><i class="fas fa-users"></i> MUHAS</a>
+          <a href="https://example.com/association2"><i class="fas fa-users"></i> MUST</a>
+          <a href="https://example.com/association3"><i class="fas fa-users"></i> AMMET</a>
+          <a href="https://example.com/association4"><i class="fas fa-users"></i> TABESA</a>
+          <a href="https://example.com/association5"><i class="fas fa-users"></i> TABESA-2023</a>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <p>&copy; 2024 Medical Equipment Manuals. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<!-- Bootstrap and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="scripts.js"></script>
+</body>
+</html>

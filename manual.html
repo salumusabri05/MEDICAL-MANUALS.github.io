@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Title - Medical Equipment Manuals</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#" id="fornax">FORNAX Medical Manuals</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="categories.html">Categories</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="about.html">About</a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2>Manual Title</h2>
+    <p class="text-muted">Posted on: July 20, 2024</p>
+    <p>Detailed information about the manual...</p>
+
+    <div class="mt-4">
+        <h3>Download Manual</h3>
+        <a href="sample-manual.pdf" class="btn btn-primary" download>Download PDF</a>
+    </div>
+</div>
+<div class="container mt-5">
+    <h2>Manual Title</h2>
+    <p class="text-muted">Posted on: July 20, 2024</p>
+    <p>Detailed information about the manual...</p>
+
+    <div class="mt-4">
+        <h3>Download Manual</h3>
+        <a href="sample-manual.pdf" class="btn btn-primary" download>Download PDF</a>
+    </div>
+</div>
+<div class="container mt-5">
+    <h2>Manual Title</h2>
+    <p class="text-muted">Posted on: July 20, 2024</p>
+    <p>Detailed information about the manual...</p>
+
+    <div class="mt-4">
+        <h3>Download Manual</h3>
+        <a href="sample-manual.pdf" class="btn btn-primary" download>Download PDF</a>
+    </div>
+</div>
+<div class="container mt-5">
+    <h2>Manual Title</h2>
+    <p class="text-muted">Posted on: July 20, 2024</p>
+    <p>Detailed information about the manual...</p>
+
+    <div class="mt-4">
+        <h3>Download Manual</h3>
+        <a href="sample-manual.pdf" class="btn btn-primary" download>Download PDF</a>
+    </div>
+</div>
+<div class="container mt-5">
+    <h2>Manual Title</h2>
+    <p class="text-muted">Posted on: July 20, 2024</p>
+    <p>Detailed information about the manual...</p>
+
+    <div class="mt-4">
+        <h3>Download Manual</h3>
+        <a href="sample-manual.pdf" class="btn btn-primary" download>Download PDF</a>
+    </div>
+</div>
+<div class="container mt-5">
+    <h2>Manual Title</h2>
+    <p class="text-muted">Posted on: July 20, 2024</p>
+    <p>Detailed information about the manual...</p>
+
+    <div class="mt-4">
+        <h3>Download Manual</h3>
+        <a href="sample-manual.pdf" class="btn btn-primary" download>Download PDF</a>
+    </div>
+</div>
+<div class="container mt-5">
+    <h2>Manual Title</h2>
+    <p class="text-muted">Posted on: July 20, 2024</p>
+    <p>Detailed information about the manual...</p>
+
+    <div class="mt-4">
+        <h3>Download Manual</h3>
+        <a href="sample-manual.pdf" class="btn btn-primary" download>Download PDF</a>
+    </div>
+</div>
+<!-- manuals uploaded-->
+<div class="container mt-5">
+    <h2>Uploaded Manuals</h2>
+    <div id="manualGallery" class="row">
+        <!-- Uploaded manuals will appear here -->
+    </div>
+    <a href="index.html" class="btn btn-primary mt-3">Upload More Manuals</a>
+</div>
+<script>
+    function loadManuals() {
+        const manuals = JSON.parse(localStorage.getItem('manuals')) || [];
+        const manualGallery = document.getElementById('manualGallery');
+        manualGallery.innerHTML = '';
+
+        manuals.forEach(manual => {
+            const colDiv = document.createElement('div');
+            colDiv.className = 'col-md-4';
+            colDiv.innerHTML = `
+          <div class="card mb-4">
+            <img src="${manual.cover}" class="card-img-top" alt="Manual Cover">
+            <div class="card-body">
+              <h5 class="card-title">${manual.title}</h5>
+              <p class="card-text">by ${manual.author}</p>
+              <a href="${manual.file}" class="btn btn-primary" target="_blank">View Manual</a>
+              <button class="btn btn-danger mt-2" onclick="deleteManual(${manual.id})">Delete</button>
+            </div>
+          </div>
+        `;
+            manualGallery.appendChild(colDiv);
+        });
+    }
+
+    function deleteManual(id) {
+        const manuals = JSON.parse(localStorage.getItem('manuals')) || [];
+        const updatedManuals = manuals.filter(manual => manual.id !== id);
+        localStorage.setItem('manuals', JSON.stringify(updatedManuals));
+        loadManuals();
+    }
+
+    window.onload = loadManuals;
+</script>
+
+
+<footer class="bg-light text-center py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 footer-section">
+                <h5>Follow Us</h5>
+                <div class="links">
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                    <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                </div>
+            </div>
+            <div class="col-md-4 footer-section">
+                <h5>Manufacturers</h5>
+                <div class="links">
+                    <a href="https://example.com/manufacturer1"><i class="fas fa-industry"></i> Manufacturer 1</a>
+                    <a href="https://example.com/manufacturer2"><i class="fas fa-industry"></i> Manufacturer 2</a>
+                    <a href="https://example.com/manufacturer3"><i class="fas fa-industry"></i> Manufacturer 3</a>
+                    <a href="https://example.com/manufacturer4"><i class="fas fa-industry"></i> Manufacturer 4</a>
+                    <a href="https://example.com/manufacturer5"><i class="fas fa-industry"></i> Manufacturer 5</a>
+                </div>
+            </div>
+            <div class="col-md-4 footer-section">
+                <h5>Hospitals</h5>
+                <div class="links">
+                    <a href="https://example.com/hospital1"><i class="fas fa-hospital"></i> Hospital 1</a>
+                    <a href="https://example.com/hospital2"><i class="fas fa-hospital"></i> Hospital 2</a>
+                    <a href="https://example.com/hospital3"><i class="fas fa-hospital"></i> Hospital 3</a>
+                    <a href="https://example.com/hospital4"><i class="fas fa-hospital"></i> Hospital 4</a>
+                    <a href="https://example.com/hospital5"><i class="fas fa-hospital"></i> Hospital 5</a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12 footer-section">
+                <h5>Associations</h5>
+                <div class="links">
+                    <a href="https://example.com/association1"><i class="fas fa-users"></i> Association 1</a>
+                    <a href="https://example.com/association2"><i class="fas fa-users"></i> Association 2</a>
+                    <a href="https://example.com/association3"><i class="fas fa-users"></i> Association 3</a>
+                    <a href="https://example.com/association4"><i class="fas fa-users"></i> Association 4</a>
+                    <a href="https://example.com/association5"><i class="fas fa-users"></i> Association 5</a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <p>&copy; 2024 Medical Equipment Manuals. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="scripts.js"></script>
+</body>
+</html>
